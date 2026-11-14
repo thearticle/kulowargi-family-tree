@@ -1,0 +1,430 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 920" width="1340" height="920" style="background:#0F172A; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Card shadow -->
+    <filter id="shadow" x="-8%" y="-6%" width="116%" height="116%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <filter id="modalShadow" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="-4" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.16"/>
+    </filter>
+    <clipPath id="screenClip1"><rect width="393" height="852" rx="44"/></clipPath>
+    <clipPath id="screenClip2"><rect width="393" height="852" rx="44"/></clipPath>
+    <clipPath id="screenClip3"><rect width="393" height="852" rx="44"/></clipPath>
+  </defs>
+
+  <!-- Title & Export Info Header -->
+  <text x="50" y="38" fill="#F8FAFC" font-size="22" font-weight="800">🌳 Family Tree Mobile App — Figma UI Design Kit</text>
+  <text x="50" y="58" fill="#94A3B8" font-size="13" font-weight="500">Auto-exported from React Native (Expo) code • Drag &amp; drop directly into any Figma canvas</text>
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 1: TREE VIEW & ACTIVE INSPECTOR (X: 50, Y: 80)                     -->
+  <!-- ========================================================================= -->
+  <g transform="translate(50, 80)">
+    <!-- Phone Bezel Background -->
+    <rect width="393" height="852" rx="44" fill="#F8FAFC" stroke="#334155" stroke-width="6"/>
+
+    <g clip-path="url(#screenClip1)">
+      <!-- Status Bar -->
+      <text x="32" y="32" fill="#0F172A" font-size="13" font-weight="700">9:41</text>
+      <!-- Status icons placeholder -->
+      <circle cx="340" cy="28" r="4" fill="#0F172A"/>
+      <rect x="350" y="24" width="16" height="8" rx="2" fill="none" stroke="#0F172A" stroke-width="1.5"/>
+      <rect x="352" y="26" width="10" height="4" rx="1" fill="#0F172A"/>
+
+      <!-- App Header -->
+      <rect x="0" y="44" width="393" height="64" fill="#FFFFFF"/>
+      <line x1="0" y1="108" x2="393" y2="108" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="18" y="73" fill="#0F172A" font-size="18" font-weight="800">🌳 Family Tree</text>
+      <text x="18" y="92" fill="#64748B" font-size="11" font-weight="600">9 members • 3 generations</text>
+
+      <!-- Header Action Buttons -->
+      <rect x="236" y="62" width="70" height="32" rx="10" fill="#F1F5F9"/>
+      <text x="248" y="82" fill="#334155" font-size="11" font-weight="700">💾 Backup</text>
+      
+      <rect x="312" y="62" width="65" height="32" rx="10" fill="#4F46E5"/>
+      <text x="324" y="82" fill="#FFFFFF" font-size="11" font-weight="700">＋ Person</text>
+
+      <!-- Search & Tab Bar -->
+      <rect x="0" y="108" width="393" height="52" fill="#FFFFFF"/>
+      <!-- Search Input -->
+      <rect x="18" y="118" width="242" height="34" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="28" y="139" fill="#94A3B8" font-size="12">🔍 Search member...</text>
+      
+      <!-- Tab Switcher -->
+      <rect x="268" y="118" width="107" height="34" rx="10" fill="#F1F5F9"/>
+      <rect x="270" y="120" width="50" height="30" rx="8" fill="#FFFFFF" filter="url(#shadow)"/>
+      <text x="283" y="139" fill="#0F172A" font-size="11" font-weight="700">Tree</text>
+      <text x="329" y="139" fill="#64748B" font-size="11" font-weight="600">List (9)</text>
+
+      <!-- Filter Chips Bar -->
+      <rect x="0" y="160" width="393" height="40" fill="#FFFFFF"/>
+      <line x1="0" y1="200" x2="393" y2="200" stroke="#E2E8F0" stroke-width="1"/>
+      <!-- Filter Chips -->
+      <rect x="18" y="168" width="80" height="24" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+      <text x="29" y="184" fill="#4F46E5" font-size="10" font-weight="700">All Genders</text>
+
+      <rect x="104" y="168" width="64" height="24" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="114" y="184" fill="#64748B" font-size="10" font-weight="600">♂ Male</text>
+
+      <rect x="174" y="168" width="72" height="24" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="184" y="184" fill="#64748B" font-size="10" font-weight="600">♀ Female</text>
+
+      <line x1="254" y1="172" x2="254" y2="188" stroke="#E2E8F0" stroke-width="1"/>
+
+      <rect x="262" y="168" width="54" height="24" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="272" y="184" fill="#64748B" font-size="10" font-weight="600">Gen 1</text>
+
+      <rect x="322" y="168" width="54" height="24" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="332" y="184" fill="#64748B" font-size="10" font-weight="600">Gen 2</text>
+
+      <!-- CANVAS CONTENT AREA (Generations & Nodes) -->
+      <!-- Generation 1 (Arthur & Eleanor) -->
+      <!-- Spouse Connector Line -->
+      <line x1="170" y1="265" x2="218" y2="265" stroke="#F43F5E" stroke-width="2.5" stroke-dasharray="4,3"/>
+      <circle cx="194" cy="265" r="9" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+      <text x="190" y="268" font-size="8">❤️</text>
+
+      <!-- Parent-Child Branch Lines from Gen 1 to Gen 2 -->
+      <path d="M 194 265 L 194 315 L 118 315 L 118 335" stroke="#94A3B8" stroke-width="2" fill="none" stroke-linejoin="round"/>
+      <circle cx="118" cy="335" r="3" fill="#64748B"/>
+      <path d="M 194 315 L 270 315 L 270 335" stroke="#94A3B8" stroke-width="2" fill="none" stroke-linejoin="round"/>
+      <circle cx="270" cy="335" r="3" fill="#64748B"/>
+
+      <!-- Node 1: Arthur Pendelton (Male) -->
+      <g transform="translate(38, 225)" filter="url(#shadow)">
+        <rect width="132" height="78" rx="12" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1.5"/>
+        <circle cx="28" cy="26" r="15" fill="#EFF6FF"/>
+        <text x="20" y="32" font-size="15">👴</text>
+        <rect x="80" y="17" width="42" height="18" rx="6" fill="#DBEAFE"/>
+        <text x="86" y="29" fill="#1D4ED8" font-size="9" font-weight="700">Gen 1</text>
+        <text x="12" y="55" fill="#0F172A" font-size="11" font-weight="700">Arthur P.</text>
+        <text x="12" y="69" fill="#64748B" font-size="9" font-weight="500">1945 – 2018</text>
+      </g>
+
+      <!-- Node 2: Eleanor Pendelton (Female) -->
+      <g transform="translate(218, 225)" filter="url(#shadow)">
+        <rect width="132" height="78" rx="12" fill="#FFFFFF" stroke="#EC4899" stroke-width="1.5"/>
+        <circle cx="28" cy="26" r="15" fill="#FDF2F8"/>
+        <text x="20" y="32" font-size="15">👵</text>
+        <rect x="80" y="17" width="42" height="18" rx="6" fill="#FCE7F3"/>
+        <text x="86" y="29" fill="#BE185D" font-size="9" font-weight="700">Gen 1</text>
+        <text x="12" y="55" fill="#0F172A" font-size="11" font-weight="700">Eleanor P.</text>
+        <text x="12" y="69" fill="#64748B" font-size="9" font-weight="500">1948 – Living</text>
+      </g>
+
+      <!-- Generation 2 (David & Maya) - SELECTED CARD -->
+      <!-- Spouse Connector -->
+      <line x1="170" y1="375" x2="218" y2="375" stroke="#F43F5E" stroke-width="2.5" stroke-dasharray="4,3"/>
+      <circle cx="194" cy="375" r="9" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+      <text x="190" y="378" font-size="8">❤️</text>
+
+      <!-- Node 3: David Pendelton (SELECTED) -->
+      <g transform="translate(38, 335)" filter="url(#shadow)">
+        <rect width="132" height="78" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.5"/>
+        <circle cx="28" cy="26" r="15" fill="#EFF6FF"/>
+        <text x="20" y="32" font-size="15">👨</text>
+        <rect x="80" y="17" width="42" height="18" rx="6" fill="#DBEAFE"/>
+        <text x="86" y="29" fill="#1D4ED8" font-size="9" font-weight="700">Gen 2</text>
+        <text x="12" y="55" fill="#0F172A" font-size="11" font-weight="800">David P. ⭐</text>
+        <text x="12" y="69" fill="#4F46E5" font-size="9" font-weight="600">1972 – Present</text>
+      </g>
+
+      <!-- Node 4: Maya Lin-Pendelton -->
+      <g transform="translate(218, 335)" filter="url(#shadow)">
+        <rect width="132" height="78" rx="12" fill="#FFFFFF" stroke="#EC4899" stroke-width="1.5"/>
+        <circle cx="28" cy="26" r="15" fill="#FDF2F8"/>
+        <text x="20" y="32" font-size="15">👩</text>
+        <rect x="80" y="17" width="42" height="18" rx="6" fill="#FCE7F3"/>
+        <text x="86" y="29" fill="#BE185D" font-size="9" font-weight="700">Gen 2</text>
+        <text x="12" y="55" fill="#0F172A" font-size="11" font-weight="700">Maya Lin-P.</text>
+        <text x="12" y="69" fill="#64748B" font-size="9" font-weight="500">1974 – Present</text>
+      </g>
+
+      <!-- Floating Canvas Toolbar -->
+      <g transform="translate(330, 220)" filter="url(#shadow)">
+        <rect width="44" height="130" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="16" y="26" fill="#334155" font-size="15" font-weight="700">＋</text>
+        <text x="11" y="46" fill="#64748B" font-size="9" font-weight="700">88%</text>
+        <text x="17" y="66" fill="#334155" font-size="15" font-weight="700">－</text>
+        <line x1="8" y1="74" x2="36" y2="74" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="8" y="92" fill="#475569" font-size="9" font-weight="600">Center</text>
+        <rect x="6" y="100" width="32" height="20" rx="6" fill="#EEF2FF"/>
+        <text x="10" y="114" fill="#4F46E5" font-size="9" font-weight="700">Focus</text>
+      </g>
+
+      <!-- Bottom Inspector Sheet (Active Member Card) -->
+      <g transform="translate(0, 570)" filter="url(#modalShadow)">
+        <path d="M 0 24 Q 0 0 24 0 L 369 0 Q 393 0 393 24 L 393 282 L 0 282 Z" fill="#FFFFFF"/>
+        <!-- Member Profile Header -->
+        <circle cx="44" cy="40" r="20" fill="#EEF2FF"/>
+        <text x="32" y="48" font-size="22">👨</text>
+        
+        <text x="76" y="34" fill="#0F172A" font-size="16" font-weight="800">David Pendelton</text>
+        <text x="76" y="52" fill="#64748B" font-size="11" font-weight="500">1972 – Present • Generation 2</text>
+        
+        <!-- Dismiss Button -->
+        <circle cx="360" cy="38" r="14" fill="#F1F5F9"/>
+        <text x="356" y="43" fill="#64748B" font-size="12" font-weight="700">✕</text>
+
+        <!-- Bio Note -->
+        <rect x="20" y="70" width="353" height="36" rx="8" fill="#F8FAFC"/>
+        <text x="30" y="92" fill="#475569" font-size="11" font-style="italic">"Eldest son, civil engineer living in Seattle."</text>
+
+        <!-- Relatives Chips (Parents, Spouse, Children) -->
+        <text x="20" y="126" fill="#64748B" font-size="10" font-weight="700" letter-spacing="0.5">RELATIVES &amp; CONNECTIONS</text>
+        <rect x="20" y="136" width="105" height="26" rx="8" fill="#F1F5F9"/>
+        <text x="28" y="153" fill="#334155" font-size="10" font-weight="600">⬆️ Arthur (Dad)</text>
+
+        <rect x="131" y="136" width="105" height="26" rx="8" fill="#F1F5F9"/>
+        <text x="139" y="153" fill="#334155" font-size="10" font-weight="600">⬆️ Eleanor (Mom)</text>
+
+        <rect x="242" y="136" width="125" height="26" rx="8" fill="#FFF1F2"/>
+        <text x="250" y="153" fill="#E11D48" font-size="10" font-weight="600">❤️ Spouse: Maya</text>
+
+        <!-- Action Row (Quick Add Relatives + Edit/Delete) -->
+        <g transform="translate(20, 178)">
+          <rect x="0" y="0" width="70" height="38" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+          <text x="14" y="24" fill="#4F46E5" font-size="12" font-weight="700">＋ Child</text>
+
+          <rect x="76" y="0" width="78" height="38" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+          <text x="86" y="24" fill="#4F46E5" font-size="12" font-weight="700">＋ Spouse</text>
+
+          <rect x="160" y="0" width="76" height="38" rx="10" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+          <text x="171" y="24" fill="#4F46E5" font-size="12" font-weight="700">＋ Parent</text>
+
+          <rect x="242" y="0" width="65" height="38" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="254" y="24" fill="#334155" font-size="12" font-weight="700">✏️ Edit</text>
+
+          <rect x="313" y="0" width="40" height="38" rx="10" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+          <text x="325" y="24" font-size="12">🗑️</text>
+        </g>
+      </g>
+
+      <!-- Home Indicator -->
+      <rect x="132" y="836" width="130" height="4" rx="2" fill="#0F172A"/>
+    </g>
+  </g>
+  <text x="50" y="955" fill="#94A3B8" font-size="12" font-weight="600">Frame 1: Interactive Canvas &amp; Inspector</text>
+
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 2: DIRECTORY LIST VIEW (X: 470, Y: 80)                             -->
+  <!-- ========================================================================= -->
+  <g transform="translate(470, 80)">
+    <!-- Phone Bezel Background -->
+    <rect width="393" height="852" rx="44" fill="#F8FAFC" stroke="#334155" stroke-width="6"/>
+
+    <g clip-path="url(#screenClip2)">
+      <!-- Status Bar -->
+      <text x="32" y="32" fill="#0F172A" font-size="13" font-weight="700">9:41</text>
+      <circle cx="340" cy="28" r="4" fill="#0F172A"/>
+      <rect x="350" y="24" width="16" height="8" rx="2" fill="none" stroke="#0F172A" stroke-width="1.5"/>
+      <rect x="352" y="26" width="10" height="4" rx="1" fill="#0F172A"/>
+
+      <!-- App Header -->
+      <rect x="0" y="44" width="393" height="64" fill="#FFFFFF"/>
+      <line x1="0" y1="108" x2="393" y2="108" stroke="#F1F5F9" stroke-width="1"/>
+      <text x="18" y="73" fill="#0F172A" font-size="18" font-weight="800">🌳 Family Tree</text>
+      <text x="18" y="92" fill="#64748B" font-size="11" font-weight="600">Directory &amp; Family Records</text>
+
+      <rect x="312" y="62" width="65" height="32" rx="10" fill="#4F46E5"/>
+      <text x="324" y="82" fill="#FFFFFF" font-size="11" font-weight="700">＋ Person</text>
+
+      <!-- Search & Tab Bar (List Tab Active) -->
+      <rect x="0" y="108" width="393" height="52" fill="#FFFFFF"/>
+      <rect x="18" y="118" width="242" height="34" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="28" y="139" fill="#94A3B8" font-size="12">🔍 Search member...</text>
+      
+      <rect x="268" y="118" width="107" height="34" rx="10" fill="#F1F5F9"/>
+      <text x="283" y="139" fill="#64748B" font-size="11" font-weight="600">Tree</text>
+      <rect x="321" y="120" width="52" height="30" rx="8" fill="#FFFFFF" filter="url(#shadow)"/>
+      <text x="328" y="139" fill="#0F172A" font-size="11" font-weight="700">List (9)</text>
+
+      <!-- LIST ITEMS -->
+      <g transform="translate(18, 175)">
+        <!-- Member Item 1 -->
+        <g transform="translate(0, 0)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="36" cy="42" r="22" fill="#EFF6FF"/>
+          <text x="25" y="50" font-size="22">👴</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="700">Arthur Pendelton</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#EEF2FF"/>
+          <text x="299" y="31" fill="#4F46E5" font-size="10" font-weight="700">Gen 1</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 1945 – d. 2018 • 0 parents • 2 children</text>
+          <text x="70" y="66" fill="#475569" font-size="11" font-style="italic">Family patriarch, retired carpenter...</text>
+        </g>
+
+        <!-- Member Item 2 -->
+        <g transform="translate(0, 96)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="36" cy="42" r="22" fill="#FDF2F8"/>
+          <text x="25" y="50" font-size="22">👵</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="700">Eleanor Pendelton</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#EEF2FF"/>
+          <text x="299" y="31" fill="#4F46E5" font-size="10" font-weight="700">Gen 1</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 1948 • 0 parents • 2 children</text>
+          <text x="70" y="66" fill="#475569" font-size="11" font-style="italic">Former school teacher and family historian.</text>
+        </g>
+
+        <!-- Member Item 3 (Selected) -->
+        <g transform="translate(0, 192)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+          <circle cx="36" cy="42" r="22" fill="#DBEAFE"/>
+          <text x="25" y="50" font-size="22">👨</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="800">David Pendelton ⭐</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#4F46E5"/>
+          <text x="299" y="31" fill="#FFFFFF" font-size="10" font-weight="700">Gen 2</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 1972 • 2 parents • 2 children</text>
+          <text x="70" y="66" fill="#4F46E5" font-size="11" font-weight="500">Civil engineer living in Seattle.</text>
+        </g>
+
+        <!-- Member Item 4 -->
+        <g transform="translate(0, 288)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="36" cy="42" r="22" fill="#FDF2F8"/>
+          <text x="25" y="50" font-size="22">👩</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="700">Maya Lin-Pendelton</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#EEF2FF"/>
+          <text x="299" y="31" fill="#4F46E5" font-size="10" font-weight="700">Gen 2</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 1974 • 0 parents • 2 children</text>
+          <text x="70" y="66" fill="#475569" font-size="11" font-style="italic">Pediatrician and marathon runner.</text>
+        </g>
+
+        <!-- Member Item 5 -->
+        <g transform="translate(0, 384)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="36" cy="42" r="22" fill="#EFF6FF"/>
+          <text x="25" y="50" font-size="22">👦</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="700">Leo Pendelton</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#EEF2FF"/>
+          <text x="299" y="31" fill="#4F46E5" font-size="10" font-weight="700">Gen 3</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 2001 • 2 parents • 0 children</text>
+          <text x="70" y="66" fill="#475569" font-size="11" font-style="italic">Software designer and guitarist.</text>
+        </g>
+
+        <!-- Member Item 6 -->
+        <g transform="translate(0, 480)" filter="url(#shadow)">
+          <rect width="357" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+          <circle cx="36" cy="42" r="22" fill="#FDF2F8"/>
+          <text x="25" y="50" font-size="22">👧</text>
+          <text x="70" y="32" fill="#0F172A" font-size="14" font-weight="700">Sophie Pendelton</text>
+          <rect x="290" y="18" width="52" height="18" rx="6" fill="#EEF2FF"/>
+          <text x="299" y="31" fill="#4F46E5" font-size="10" font-weight="700">Gen 3</text>
+          <text x="70" y="49" fill="#64748B" font-size="11">b. 2004 • 2 parents • 0 children</text>
+          <text x="70" y="66" fill="#475569" font-size="11" font-style="italic">Marine biology student at university.</text>
+        </g>
+      </g>
+
+      <!-- Home Indicator -->
+      <rect x="132" y="836" width="130" height="4" rx="2" fill="#0F172A"/>
+    </g>
+  </g>
+  <text x="470" y="955" fill="#94A3B8" font-size="12" font-weight="600">Frame 2: Directory &amp; Member Records</text>
+
+
+  <!-- ========================================================================= -->
+  <!-- SCREEN 3: ADD / EDIT MEMBER BOTTOM SHEET MODAL (X: 890, Y: 80)           -->
+  <!-- ========================================================================= -->
+  <g transform="translate(890, 80)">
+    <!-- Phone Bezel Background -->
+    <rect width="393" height="852" rx="44" fill="#F8FAFC" stroke="#334155" stroke-width="6"/>
+
+    <g clip-path="url(#screenClip3)">
+      <!-- Dimmed Background Overlay Behind Modal -->
+      <rect width="393" height="852" fill="#0F172A" opacity="0.45"/>
+
+      <!-- Modal Bottom Sheet -->
+      <g transform="translate(0, 110)" filter="url(#modalShadow)">
+        <path d="M 0 28 Q 0 0 28 0 L 365 0 Q 393 0 393 28 L 393 742 L 0 742 Z" fill="#FFFFFF"/>
+
+        <!-- Sheet Header -->
+        <text x="24" y="42" fill="#0F172A" font-size="18" font-weight="800">Add Child to Tree</text>
+        <text x="24" y="60" fill="#4F46E5" font-size="12" font-weight="600">Child of David &amp; Maya</text>
+        
+        <circle cx="360" cy="44" r="16" fill="#F1F5F9"/>
+        <text x="355" y="49" fill="#475569" font-size="13" font-weight="700">✕</text>
+
+        <!-- Form Field: Full Name -->
+        <text x="24" y="98" fill="#334155" font-size="11" font-weight="700">FULL NAME *</text>
+        <rect x="24" y="108" width="345" height="42" rx="10" fill="#F8FAFC" stroke="#4F46E5" stroke-width="1.5"/>
+        <text x="36" y="134" fill="#0F172A" font-size="14" font-weight="500">Oliver Pendelton|</text>
+
+        <!-- Form Field: Gender Options -->
+        <text x="24" y="174" fill="#334155" font-size="11" font-weight="700">GENDER</text>
+        <g transform="translate(24, 184)">
+          <rect x="0" y="0" width="107" height="38" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.5"/>
+          <text x="28" y="24" fill="#4F46E5" font-size="12" font-weight="700">♂ Male</text>
+
+          <rect x="119" y="0" width="107" height="38" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="141" y="24" fill="#64748B" font-size="12" font-weight="600">♀ Female</text>
+
+          <rect x="238" y="0" width="107" height="38" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="264" y="24" fill="#64748B" font-size="12" font-weight="600">⚧ Other</text>
+        </g>
+
+        <!-- Form Field: Birth & Death Years -->
+        <g transform="translate(24, 246)">
+          <text x="0" y="0" fill="#334155" font-size="11" font-weight="700">BIRTH YEAR</text>
+          <rect x="0" y="10" width="165" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="12" y="36" fill="#0F172A" font-size="13">2010</text>
+
+          <text x="180" y="0" fill="#334155" font-size="11" font-weight="700">DEATH YEAR</text>
+          <rect x="180" y="10" width="165" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="192" y="36" fill="#94A3B8" font-size="13">Living</text>
+        </g>
+
+        <!-- Form Field: Avatar Picker Grid -->
+        <text x="24" y="324" fill="#334155" font-size="11" font-weight="700">AVATAR EMOJI</text>
+        <g transform="translate(24, 334)">
+          <!-- Row 1 -->
+          <rect x="0" y="0" width="46" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="13" y="27" font-size="20">👶</text>
+
+          <rect x="58" y="0" width="46" height="42" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+          <text x="71" y="27" font-size="20">👦</text>
+
+          <rect x="116" y="0" width="46" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="129" y="27" font-size="20">👧</text>
+
+          <rect x="174" y="0" width="46" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="187" y="27" font-size="20">🧑</text>
+
+          <rect x="232" y="0" width="46" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="245" y="27" font-size="20">👨</text>
+
+          <rect x="290" y="0" width="46" height="42" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+          <text x="303" y="27" font-size="20">👩</text>
+        </g>
+
+        <!-- Form Field: Notes / Bio -->
+        <text x="24" y="408" fill="#334155" font-size="11" font-weight="700">BIO &amp; NOTES</text>
+        <rect x="24" y="418" width="345" height="74" rx="10" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="36" y="442" fill="#0F172A" font-size="12">Loves playing soccer and learning piano.</text>
+
+        <!-- Selected Parents Chips -->
+        <text x="24" y="522" fill="#334155" font-size="11" font-weight="700">PARENTS (SELECTED: 2/2)</text>
+        <g transform="translate(24, 532)">
+          <rect x="0" y="0" width="138" height="32" rx="16" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+          <text x="12" y="21" fill="#4F46E5" font-size="11" font-weight="700">👨 David Pendelton</text>
+
+          <rect x="146" y="0" width="154" height="32" rx="16" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1"/>
+          <text x="158" y="21" fill="#4F46E5" font-size="11" font-weight="700">👩 Maya Lin-Pendelton</text>
+        </g>
+
+        <!-- Modal Bottom Actions -->
+        <g transform="translate(24, 588)">
+          <line x1="-24" y1="-12" x2="369" y2="-12" stroke="#F1F5F9" stroke-width="1"/>
+          <rect x="0" y="0" width="110" height="46" rx="12" fill="#F1F5F9"/>
+          <text x="34" y="28" fill="#475569" font-size="13" font-weight="700">Cancel</text>
+
+          <rect x="122" y="0" width="223" height="46" rx="12" fill="#4F46E5"/>
+          <text x="182" y="28" fill="#FFFFFF" font-size="14" font-weight="700">Add to Tree</text>
+        </g>
+      </g>
+
+      <!-- Home Indicator -->
+      <rect x="132" y="836" width="130" height="4" rx="2" fill="#0F172A"/>
+    </g>
+  </g>
+  <text x="890" y="955" fill="#94A3B8" font-size="12" font-weight="600">Frame 3: Add / Edit Relative Modal Form</text>
+</svg>
