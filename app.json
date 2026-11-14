@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "KuloWargi",
+    "slug": "family-tree-app",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.ojan.familytree",
+      "adaptiveIcon": {
+        "backgroundColor": "#EEF2FF"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
