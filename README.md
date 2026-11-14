@@ -50,26 +50,24 @@ Built with **React Native** and custom **mathematical tree layout algorithms**, 
 <div align="center">
   <table>
     <tr>
-      <td align="center"><b>Light Mode Tree Canvas</b></td>
-      <td align="center"><b>Dark Mode Tree Canvas</b></td>
+      <td align="center" width="33%"><b>1. Light Mode Tree Canvas</b></td>
+      <td align="center" width="33%"><b>2. Dark Mode Tree Canvas</b></td>
+      <td align="center" width="33%"><b>3. Directory & Search View</b></td>
     </tr>
     <tr>
-      <td><img src="./docs/screenshots/tree_view_light.jpg" width="340" alt="Light Mode Tree Canvas" /></td>
-      <td><img src="./docs/screenshots/tree_view_dark.jpg" width="340" alt="Dark Mode Tree Canvas" /></td>
+      <td align="center"><img src="./docs/screenshots/tree_view_light.jpg" width="225" alt="Light Mode Tree Canvas" /></td>
+      <td align="center"><img src="./docs/screenshots/tree_view_dark.jpg" width="225" alt="Dark Mode Tree Canvas" /></td>
+      <td align="center"><img src="./docs/screenshots/directory_list_view.jpg" width="225" alt="Directory & Search View" /></td>
     </tr>
     <tr>
-      <td align="center"><b>Directory & Generation Filter</b></td>
-      <td align="center"><b>Edit Member & Relationship Picker</b></td>
+      <td align="center" width="33%"><b>4. Member Editor & Kinship</b></td>
+      <td align="center" width="33%"><b>5. In-App Credits Dialog</b></td>
+      <td align="center" width="33%"><b>6. Branded Launch Splash</b></td>
     </tr>
     <tr>
-      <td><img src="./docs/screenshots/directory_list_view.jpg" width="340" alt="Directory & Generation Filter" /></td>
-      <td><img src="./docs/screenshots/edit_member_modal.jpg" width="340" alt="Edit Member Modal" /></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center"><b>In-App Credits Modal</b></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center"><img src="./docs/screenshots/credits_modal.jpg" width="340" alt="Credits Modal" /></td>
+      <td align="center"><img src="./docs/screenshots/edit_member_modal.jpg" width="225" alt="Member Editor & Kinship" /></td>
+      <td align="center"><img src="./docs/screenshots/credits_modal.jpg" width="225" alt="In-App Credits Dialog" /></td>
+      <td align="center"><img src="./docs/screenshots/splash_screen.png" width="225" alt="Branded Launch Splash" /></td>
     </tr>
   </table>
 </div>
