@@ -27,9 +27,23 @@
 
 ## 📖 Overview
 
-**KuloWargi** (derived from Javanese *kulawarga*, meaning "family") is an intuitive, privacy-conscious mobile genealogy app designed to preserve, visualize, and navigate multi-generational family trees without reliance on cloud accounts or third-party servers. 
+**KuloWargi** is an intuitive, privacy-conscious mobile genealogy application designed to preserve, visualize, and navigate multi-generational family trees without reliance on cloud accounts or third-party servers.
 
 Built with **React Native** and custom **mathematical tree layout algorithms**, KuloWargi renders multi-generation lineages smoothly at 60 FPS, supporting infinite gesture panning, pinch-to-zoom, drag-and-drop card repositioning with magnetic grid-snap, and full JSON backup/restore capabilities.
+
+---
+
+## 🌿 The Philosophy Behind the Name
+
+The name **KuloWargi** is an intentional, cross-cultural linguistic blend uniting two rich Indonesian regional languages:
+
+| Word | Language & Origin | Meaning & Cultural Nuance |
+|:---:|:---:|---|
+| **Kulo** *(K-U-L-O)* | **Javanese** (*Basa Krama Alus*) | Means **"I"** or **"Me"** in the polite, highest caste of the Javanese language. It conveys deep humility, respect, and reverence toward elders and ancestors. |
+| **Wargi** *(W-A-R-G-I)* | **Sundanese** | Means **"Family"** or **"Kinfolk"** (*wargi / wargi sakulawarga*), representing community, warmth, and close blood relations. |
+
+### The Wordplay Twist:
+While sounding phonetically similar to the classic archipelagic term *kulawarga* ("family"), the thoughtful separation of **Kulo** ("me") + **Wargi** ("family") carries a poetic double meaning: **"My Family"** (*Keluarga Saya*). It places oneself humbly within the living tapestry of their lineage — honoring where we come from while embracing the kin we cherish today.
 
 ---
 
