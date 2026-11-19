@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Modal,
   View,
   Text,
   TextInput,
@@ -10,8 +9,7 @@ import {
 } from 'react-native';
 import { FamilyMember } from '../types';
 
-interface BackupModalProps {
-  visible: boolean;
+interface BackupDialogProps {
   members: FamilyMember[];
   onClose: () => void;
   onImport: (imported: FamilyMember[]) => void;
@@ -19,25 +17,21 @@ interface BackupModalProps {
   onClearAll: () => void;
 }
 
-export const BackupModal: React.FC<BackupModalProps> = ({
-  visible,
+export const BackupDialog: React.FC<BackupDialogProps> = ({
   members,
   onClose,
   onImport,
   onResetSample,
   onClearAll,
 }) => {
-  const [jsonText, setJsonText] = useState('');
+  const [jsonText, setJsonText] = useState(() => JSON.stringify(members, null, 2));
   const [statusMsg, setStatusMsg] = useState<{ text: string; isError?: boolean } | null>(
     null
   );
 
   useEffect(() => {
-    if (visible) {
-      setJsonText(JSON.stringify(members, null, 2));
-      setStatusMsg(null);
-    }
-  }, [visible, members]);
+    setJsonText(JSON.stringify(members, null, 2));
+  }, [members]);
 
   const handleShareExport = async () => {
     try {
@@ -82,71 +76,69 @@ export const BackupModal: React.FC<BackupModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} animationType="fade" transparent onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={styles.dialog}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Backup & Restore (JSON)</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-              <Text style={styles.closeBtnText}>✕</Text>
-            </TouchableOpacity>
-          </View>
+    <View style={styles.overlay}>
+      <View style={styles.dialog}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Backup & Restore (JSON)</Text>
+          <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+            <Text style={styles.closeBtnText}>✕</Text>
+          </TouchableOpacity>
+        </View>
 
-          <Text style={styles.desc}>
-            Your family tree is automatically saved locally on your device. You can copy or
-            share the JSON below as a backup, or paste JSON to restore.
-          </Text>
+        <Text style={styles.desc}>
+          Your family tree is automatically saved locally on your device. You can copy or
+          share the JSON below as a backup, or paste JSON to restore.
+        </Text>
 
-          {statusMsg && (
-            <View
+        {statusMsg && (
+          <View
+            style={[
+              styles.statusBanner,
+              statusMsg.isError ? styles.statusError : styles.statusSuccess,
+            ]}
+          >
+            <Text
               style={[
-                styles.statusBanner,
-                statusMsg.isError ? styles.statusError : styles.statusSuccess,
+                styles.statusText,
+                statusMsg.isError ? styles.statusErrorText : styles.statusSuccessText,
               ]}
             >
-              <Text
-                style={[
-                  styles.statusText,
-                  statusMsg.isError ? styles.statusErrorText : styles.statusSuccessText,
-                ]}
-              >
-                {statusMsg.text}
-              </Text>
-            </View>
-          )}
-
-          <TextInput
-            style={styles.jsonBox}
-            multiline
-            value={jsonText}
-            onChangeText={setJsonText}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-
-          <View style={styles.actionRow}>
-            <TouchableOpacity style={styles.secondaryBtn} onPress={handleShareExport}>
-              <Text style={styles.secondaryBtnText}>📤 Share / Export</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryBtn} onPress={handleImportJson}>
-              <Text style={styles.primaryBtnText}>📥 Load from JSON</Text>
-            </TouchableOpacity>
+              {statusMsg.text}
+            </Text>
           </View>
+        )}
 
-          <View style={styles.presetRow}>
-            <TouchableOpacity style={styles.presetBtn} onPress={onResetSample}>
-              <Text style={styles.presetBtnText}>Reset to Sample Tree</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.presetBtn, styles.dangerPresetBtn]}
-              onPress={onClearAll}
-            >
-              <Text style={styles.dangerPresetText}>Clear All Data</Text>
-            </TouchableOpacity>
-          </View>
+        <TextInput
+          style={styles.jsonBox}
+          multiline
+          value={jsonText}
+          onChangeText={setJsonText}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+
+        <View style={styles.actionRow}>
+          <TouchableOpacity style={styles.secondaryBtn} onPress={handleShareExport}>
+            <Text style={styles.secondaryBtnText}>📤 Share / Export</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.primaryBtn} onPress={handleImportJson}>
+            <Text style={styles.primaryBtnText}>📥 Load from JSON</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.presetRow}>
+          <TouchableOpacity style={styles.presetBtn} onPress={onResetSample}>
+            <Text style={styles.presetBtnText}>Reset to Sample Tree</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.presetBtn, styles.dangerPresetBtn]}
+            onPress={onClearAll}
+          >
+            <Text style={styles.dangerPresetText}>Clear All Data</Text>
+          </TouchableOpacity>
         </View>
       </View>
-    </Modal>
+    </View>
   );
 };
 

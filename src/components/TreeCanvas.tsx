@@ -354,9 +354,9 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
 }) => {
   const [scale, setScale] = useState(0.85);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [viewport, setViewport] = useState({ width: 380, height: 520 });
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-  // Floating controls expansion state (item 3: shrink to square zoom % badge, tap to expand/shrink)
+  // Tap the zoom percentage to expand or collapse the floating controls.
   const [controlsExpanded, setControlsExpanded] = useState(false);
 
   // Subtle pulsing glow animation for clickable controls (collapsed zoom badge)
@@ -488,21 +488,20 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
 
   const hasCenteredInitial = useRef(false);
 
-  // Auto center on initial load once viewport is measured
-  useEffect(() => {
-    if (!hasCenteredInitial.current && viewport.width > 0 && currentLayout.nodes.length > 0) {
-      hasCenteredInitial.current = true;
-      centerTree(0.85);
-    }
-  }, [viewport.width, currentLayout.nodes.length]);
-
-  const centerTree = (targetScale = scale) => {
+  const centerTree = useCallback((target: number | 'fit') => {
     if (currentLayout.nodes.length === 0) return;
     const minX = Math.min(...currentLayout.nodes.map((n) => n.x));
     const maxX = Math.max(...currentLayout.nodes.map((n) => n.x + NODE_WIDTH));
     const minY = Math.min(...currentLayout.nodes.map((n) => n.y));
     const maxY = Math.max(...currentLayout.nodes.map((n) => n.y + NODE_HEIGHT));
 
+    const targetScale = target === 'fit'
+      ? Math.max(0.35, Math.min(
+          0.85,
+          (viewport.width - 32) / (maxX - minX),
+          (viewport.height - 32) / (maxY - minY),
+        ))
+      : target;
     const treeCenterX = (minX + maxX) / 2;
     const treeCenterY = (minY + maxY) / 2;
 
@@ -510,7 +509,14 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
     const newY = viewport.height / 2 - treeCenterY * targetScale;
     setScale(targetScale);
     setOffset({ x: newX, y: newY });
-  };
+  }, [currentLayout.nodes, viewport.width, viewport.height]);
+
+  useEffect(() => {
+    if (!hasCenteredInitial.current && viewport.width > 0 && viewport.height > 0 && currentLayout.nodes.length > 0) {
+      hasCenteredInitial.current = true;
+      centerTree('fit');
+    }
+  }, [centerTree, viewport.width, viewport.height, currentLayout.nodes.length]);
 
   const handleAutoArrange = () => {
     // 1. Clear any custom manually-dragged positions so cards align with symmetrical auto-computed layout
@@ -875,11 +881,11 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
         })}
       </View>
 
-      {/* Floating Controls (Item 3: shrinks to square zoom percentage badge; tap % to expand/shrink) */}
       {!controlsExpanded ? (
         <Animated.View
           style={[
-            styles.collapsedZoomSquare,
+            styles.floatingControlsFrame,
+            styles.collapsedZoomBadge,
             isDarkMode && styles.floatingControlsDark,
             {
               shadowOpacity: glowAnim.interpolate({
@@ -896,19 +902,11 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
                   ? ['#334155', '#818CF8']
                   : ['#CBD5E1', '#6366F1'],
               }),
-              transform: [
-                {
-                  scale: glowAnim.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, 1.05],
-                  }),
-                },
-              ],
             },
           ]}
         >
           <TouchableOpacity
-            style={styles.collapsedZoomSquareTouchable}
+            style={styles.collapsedZoomButton}
             onPress={() => setControlsExpanded(true)}
             activeOpacity={0.85}
             accessibilityLabel="Expand zoom controls"
@@ -919,16 +917,16 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
           </TouchableOpacity>
         </Animated.View>
       ) : (
-        <View style={[styles.floatingControls, isDarkMode && styles.floatingControlsDark]}>
+        <View style={[styles.floatingControlsFrame, styles.floatingControls, isDarkMode && styles.floatingControlsDark]}>
           <TouchableOpacity style={styles.controlBtn} onPress={zoomIn}>
             <Text style={[styles.controlBtnText, isDarkMode && styles.textLight]}>＋</Text>
           </TouchableOpacity>
 
-          {/* Tap zoom percentage again to shrink back to square */}
           <TouchableOpacity
             style={[styles.zoomBadgeBtn, isDarkMode && styles.zoomBadgeBtnDark]}
             onPress={() => setControlsExpanded(false)}
             activeOpacity={0.8}
+            accessibilityLabel="Collapse zoom controls"
           >
             <Text style={[styles.zoomLabel, isDarkMode && styles.textLight]}>
               {Math.round(scale * 100)}%
@@ -975,7 +973,7 @@ export const TreeCanvas: React.FC<TreeCanvasProps> = ({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.controlBtn} onPress={() => centerTree(0.85)}>
+          <TouchableOpacity style={styles.controlBtn} onPress={() => centerTree('fit')}>
             <Text style={[styles.controlBtnSubText, isDarkMode && styles.textMutedDark]}>
               Center
             </Text>
@@ -1138,15 +1136,17 @@ const styles = StyleSheet.create({
   heartText: {
     fontSize: 9,
   },
-  collapsedZoomSquare: {
+  floatingControlsFrame: {
     position: 'absolute',
     right: 14,
     top: 14,
-    width: 46,
-    height: 46,
+    width: 74,
     borderRadius: 12,
-    backgroundColor: '#FFFFFF',
     alignItems: 'center',
+  },
+  collapsedZoomBadge: {
+    height: 46,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     borderWidth: 1.5,
     borderColor: '#6366F1',
@@ -1156,7 +1156,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
   },
-  collapsedZoomSquareTouchable: {
+  collapsedZoomButton: {
     width: '100%',
     height: '100%',
     alignItems: 'center',
@@ -1185,13 +1185,8 @@ const styles = StyleSheet.create({
     color: '#0F172A',
   },
   floatingControls: {
-    position: 'absolute',
-    right: 14,
-    top: 14,
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
     padding: 6,
-    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#E2E8F0',
     shadowColor: '#0F172A',

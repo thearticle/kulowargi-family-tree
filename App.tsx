@@ -22,7 +22,7 @@ import { SAMPLE_FAMILY } from './src/sampleData';
 import { computeTreeLayout } from './src/treeLayout';
 import { TreeCanvas } from './src/components/TreeCanvas';
 import { MemberModal, QuickRelationContext } from './src/components/MemberModal';
-import { BackupModal } from './src/components/BackupModal';
+import { BackupDialog } from './src/components/BackupDialog';
 
 const STORAGE_KEY = '@family_tree_members_v2';
 const THEME_STORAGE_KEY = '@family_tree_theme_mode';
@@ -51,6 +51,8 @@ export default function App() {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [confirmDeleteMember, setConfirmDeleteMember] =
     useState<FamilyMember | null>(null);
+  const [confirmClearAll, setConfirmClearAll] = useState(false);
+  const isDeleteConfirmationOpen = confirmClearAll || Boolean(confirmDeleteMember);
   const [creditsModalOpen, setCreditsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -276,6 +278,20 @@ export default function App() {
     );
   };
 
+  const closeDeleteConfirmation = () => {
+    setConfirmDeleteMember(null);
+    setConfirmClearAll(false);
+  };
+
+  const handleClearAll = () => {
+    setMembers([]);
+    setSelectedId(null);
+    setSearchQuery('');
+    setGenderFilter('all');
+    setGenFilter('all');
+    closeDeleteConfirmation();
+  };
+
   const handleConfirmDelete = () => {
     if (!confirmDeleteMember) return;
     const id = confirmDeleteMember.id;
@@ -362,17 +378,25 @@ export default function App() {
               style={styles.headerLogo}
             />
           </Animated.View>
-          <View>
+          <View style={styles.headerBrandText}>
             <Text style={[styles.appTitle, isDarkMode && styles.textLight]}>KuloWargi</Text>
             <Text style={[styles.appSubtitle, isDarkMode && styles.textMutedDark]}>
-              {members.length} {members.length === 1 ? 'member' : 'members'} •{' '}
-              {availableGenerations.length}{' '}
-              {availableGenerations.length === 1 ? 'generation' : 'generations'}
+              {members.length} mem • {availableGenerations.length} gen
             </Text>
           </View>
         </TouchableOpacity>
 
         <View style={styles.headerActions}>
+          <TouchableOpacity
+            style={[styles.themeBtn, styles.clearBtn, isDarkMode && styles.clearBtnDark]}
+            onPress={() => setConfirmClearAll(true)}
+            disabled={!isLoaded || members.length === 0}
+            accessibilityRole="button"
+            accessibilityLabel="Clear all family members"
+            accessibilityState={{ disabled: !isLoaded || members.length === 0 }}
+          >
+            <Text style={styles.themeBtnText}>🗑️</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.themeBtn, isDarkMode && styles.themeBtnDark]}
             onPress={toggleTheme}
@@ -381,16 +405,23 @@ export default function App() {
             <Text style={styles.themeBtnText}>{isDarkMode ? '☀️' : '🌙'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.backupBtn, isDarkMode && styles.backupBtnDark]}
+            style={[styles.themeBtn, isDarkMode && styles.themeBtnDark]}
             onPress={() => setBackupModalOpen(true)}
+            accessibilityRole="button"
+            accessibilityLabel="Backup"
           >
-            <Text style={[styles.backupBtnText, isDarkMode && styles.backupBtnTextDark]}>💾 Backup</Text>
+            <Text style={styles.themeBtnText}>💾</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.addBtn}
             onPress={handleOpenAddStandalone}
+            accessibilityRole="button"
+            accessibilityLabel="Add person"
           >
-            <Text style={styles.addBtnText}>＋ Person</Text>
+            <View style={styles.addIcon} pointerEvents="none">
+              <View style={styles.addIconHorizontal} />
+              <View style={styles.addIconVertical} />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -527,7 +558,7 @@ export default function App() {
 
       {/* Main Content Area */}
       <View style={[styles.mainContent, isDarkMode && styles.mainContentDark]}>
-        {members.length === 0 ? (
+        {!isLoaded ? null : members.length === 0 ? (
           <View style={styles.emptyState}>
             <Text style={styles.emptyEmoji}>🌱</Text>
             <Text style={[styles.emptyTitle, isDarkMode && styles.textLight]}>Start Your Family Tree</Text>
@@ -735,46 +766,72 @@ export default function App() {
         </View>
       )}
 
-      {/* Delete Confirmation Yes/No Modal */}
       <Modal
-        visible={Boolean(confirmDeleteMember)}
+        visible={backupModalOpen || isDeleteConfirmationOpen}
         transparent
         animationType="fade"
-        onRequestClose={() => setConfirmDeleteMember(null)}
+        onRequestClose={backupModalOpen ? () => setBackupModalOpen(false) : closeDeleteConfirmation}
       >
-        <View style={styles.confirmOverlay}>
-          <View style={[styles.confirmBox, isDarkMode && styles.confirmBoxDark]}>
-            <View style={styles.confirmIconCircle}>
-              <Text style={styles.confirmIconEmoji}>🗑️</Text>
-            </View>
-            <Text style={[styles.confirmTitle, isDarkMode && styles.textLight]}>
-              Delete Family Member?
-            </Text>
-            <Text style={[styles.confirmMessage, isDarkMode && styles.textMutedDark]}>
-              Are you sure you want to delete{' '}
-              <Text style={[styles.confirmNameBold, isDarkMode && styles.textLight]}>
-                {confirmDeleteMember?.name}
-              </Text>{' '}
-              from your family tree?
-            </Text>
-            <View style={styles.confirmBtnRow}>
-              <TouchableOpacity
-                style={[styles.confirmNoBtn, isDarkMode && styles.confirmNoBtnDark]}
-                onPress={() => setConfirmDeleteMember(null)}
-              >
-                <Text style={[styles.confirmNoText, isDarkMode && styles.textLight]}>
-                  No
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.confirmYesBtn}
-                onPress={handleConfirmDelete}
-              >
-                <Text style={styles.confirmYesText}>Yes, Delete</Text>
-              </TouchableOpacity>
+        {backupModalOpen && (
+          <BackupDialog
+            members={members}
+            onClose={() => setBackupModalOpen(false)}
+            onImport={(imported) => {
+              setMembers(imported);
+              setSelectedId(imported[0]?.id ?? null);
+            }}
+            onResetSample={() => {
+              setMembers(SAMPLE_FAMILY);
+              setSelectedId('g3_1');
+              setBackupModalOpen(false);
+            }}
+            onClearAll={() => {
+              setBackupModalOpen(false);
+              setConfirmClearAll(true);
+            }}
+          />
+        )}
+        {isDeleteConfirmationOpen && (
+          <View style={styles.confirmOverlay}>
+            <View style={[styles.confirmBox, isDarkMode && styles.confirmBoxDark]}>
+              <View style={styles.confirmIconCircle}>
+                <Text style={styles.confirmIconEmoji}>🗑️</Text>
+              </View>
+              <Text style={[styles.confirmTitle, isDarkMode && styles.textLight]}>
+                {confirmClearAll ? 'Clear the Family Tree?' : 'Delete Family Member?'}
+              </Text>
+              <Text style={[styles.confirmMessage, isDarkMode && styles.textMutedDark]}>
+                {confirmClearAll ? (
+                  'This will delete every person and relationship from your family tree. This cannot be undone.'
+                ) : (
+                  <>
+                    Are you sure you want to delete{' '}
+                    <Text style={[styles.confirmNameBold, isDarkMode && styles.textLight]}>
+                      {confirmDeleteMember?.name}
+                    </Text>{' '}
+                    from your family tree?
+                  </>
+                )}
+              </Text>
+              <View style={styles.confirmBtnRow}>
+                <TouchableOpacity
+                  style={[styles.confirmNoBtn, isDarkMode && styles.confirmNoBtnDark]}
+                  onPress={closeDeleteConfirmation}
+                >
+                  <Text style={[styles.confirmNoText, isDarkMode && styles.textLight]}>
+                    {confirmClearAll ? 'Cancel' : 'No'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.confirmYesBtn}
+                  onPress={confirmClearAll ? handleClearAll : handleConfirmDelete}
+                >
+                  <Text style={styles.confirmYesText}>{confirmClearAll ? 'Clear All' : 'Yes, Delete'}</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        )}
       </Modal>
 
       {/* Modals */}
@@ -785,26 +842,6 @@ export default function App() {
         allMembers={members}
         onClose={() => setMemberModalOpen(false)}
         onSave={handleSaveMember}
-      />
-
-      <BackupModal
-        visible={backupModalOpen}
-        members={members}
-        onClose={() => setBackupModalOpen(false)}
-        onImport={(imported) => {
-          setMembers(imported);
-          setSelectedId(imported[0]?.id ?? null);
-        }}
-        onResetSample={() => {
-          setMembers(SAMPLE_FAMILY);
-          setSelectedId('g3_1');
-          setBackupModalOpen(false);
-        }}
-        onClearAll={() => {
-          setMembers([]);
-          setSelectedId(null);
-          setBackupModalOpen(false);
-        }}
       />
 
       {/* Credits Modal */}
@@ -874,6 +911,8 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
@@ -885,6 +924,10 @@ const styles = StyleSheet.create({
   headerBrandRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    maxWidth: '100%',
+  },
+  headerBrandText: {
+    flexShrink: 1,
   },
   logoGlowWrapper: {
     borderRadius: 22,
@@ -914,6 +957,8 @@ const styles = StyleSheet.create({
   },
   headerActions: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: 'auto',
     alignItems: 'center',
     gap: 8,
   },
@@ -930,27 +975,35 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
   },
-  backupBtn: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 10,
-    backgroundColor: '#F1F5F9',
-  },
-  backupBtnText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#334155',
-  },
   addBtn: {
-    paddingHorizontal: 13,
-    paddingVertical: 8,
+    minWidth: 44,
+    minHeight: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
     backgroundColor: '#4F46E5',
   },
-  addBtnText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#FFFFFF',
+  addIcon: {
+    width: 14,
+    height: 14,
+  },
+  addIconHorizontal: {
+    position: 'absolute',
+    left: 0,
+    top: 6,
+    width: 14,
+    height: 2,
+    borderRadius: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  addIconVertical: {
+    position: 'absolute',
+    left: 6,
+    top: 0,
+    width: 2,
+    height: 14,
+    borderRadius: 1,
+    backgroundColor: '#FFFFFF',
   },
   toolbar: {
     flexDirection: 'row',
@@ -1322,6 +1375,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   themeBtn: {
+    minWidth: 44,
+    minHeight: 44,
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 10,
@@ -1337,13 +1392,11 @@ const styles = StyleSheet.create({
   themeBtnText: {
     fontSize: 14,
   },
-  backupBtnDark: {
-    backgroundColor: '#1E293B',
-    borderWidth: 1,
-    borderColor: '#334155',
+  clearBtn: {
+    backgroundColor: '#FEE2E2',
   },
-  backupBtnTextDark: {
-    color: '#CBD5E1',
+  clearBtnDark: {
+    backgroundColor: '#450A0A',
   },
   filterChipDark: {
     backgroundColor: '#1E293B',
